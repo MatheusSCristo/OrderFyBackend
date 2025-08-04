@@ -1,6 +1,8 @@
 package com.orderfy.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +18,13 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 public class RestaurantModel extends AbstractModel {
+    private String name;
+    @Column(name = "cnpj_cpf")
+    private String cnpjCpf;
+    @OneToMany(mappedBy = "restaurant")
+    private List<EmployeeModel> employees;
 
 }
