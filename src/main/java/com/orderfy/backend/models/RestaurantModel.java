@@ -12,11 +12,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity(name="restaurant")
-@Table(name="restaurant")
+@Table(name="restaurants")
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
 public class RestaurantModel extends AbstractModel  implements UserDetails {
     @Override
