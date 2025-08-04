@@ -42,8 +42,6 @@ CREATE TABLE tables (
                         restaurant_id BIGINT NOT NULL,
                         uuid VARCHAR(36) NOT NULL UNIQUE,
                         number INT NOT NULL,
-                        identifier VARCHAR(100) NOT NULL, -- Ex: "Table 1", "Table 2"
-                        capacity INT NULL,
                         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         PRIMARY KEY (id),
                         UNIQUE (restaurant_id, number), -- Table number must be unique per restaurant
