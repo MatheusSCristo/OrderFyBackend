@@ -63,6 +63,7 @@ CREATE TABLE products (
                           category_id BIGINT NOT NULL,
                           name VARCHAR(255) NOT NULL,
                           description TEXT NULL,
+
                           price DECIMAL(10, 2) NOT NULL,
                           image_url VARCHAR(2048) NULL,
                           is_available BOOLEAN NOT NULL DEFAULT TRUE,
