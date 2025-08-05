@@ -20,6 +20,10 @@ import java.util.List;
 public class ProductModel extends AbstractModel {
 
     @ManyToMany
+    @JoinTable(
+            name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<CategoryModel> categories;
     private String name;
     @Column(columnDefinition ="TEXT")

@@ -1,3 +1,5 @@
+// Arquivo: src/main/java/com/orderfy/backend/models/TabItemModel.java
+
 package com.orderfy.backend.models;
 
 import jakarta.persistence.*;
@@ -19,11 +21,18 @@ import java.math.BigDecimal;
 public class TabItemModel extends AbstractModel{
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private TabModel tabModel;
+    @JoinColumn(name = "tab_id")
+    private TabModel tab;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductModel product;
+
     private Integer quantity;
+
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
+
     @Column(columnDefinition = "TEXT")
     private String notes;
-
 }
