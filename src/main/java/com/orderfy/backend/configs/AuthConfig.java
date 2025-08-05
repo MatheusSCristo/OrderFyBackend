@@ -1,21 +1,37 @@
 package com.orderfy.backend.configs;
 
+import com.orderfy.backend.repositories.CustomerRepository; // Importe o repositório do cliente
+import com.orderfy.backend.repositories.EmployeeRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-
 public class AuthConfig {
+
+    private final EmployeeRepository employeeRepository;
+    private final CustomerRepository customerRepository;
+
+    public AuthConfig(EmployeeRepository employeeRepository, CustomerRepository customerRepository) {
+        this.employeeRepository = employeeRepository;
+        this.customerRepository = customerRepository;
+    }
 
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> null;
+        // Lógica para buscar em ambos os repositórios
+        return username -> employeeRepository.findByCpf(username)
+                .map(employee -> (UserDetails) employee)
+                .orElseGet(() -> customerRepository.findByCpf(username)
+                        .map(customer -> (UserDetails) customer)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with CPF: " + username)));
     }
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
@@ -28,7 +44,7 @@ public class AuthConfig {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+    AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService());

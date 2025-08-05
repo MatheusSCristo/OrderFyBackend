@@ -37,12 +37,12 @@ public class EmployeeModel extends AbstractModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return cpf;
     }
 
     @Override
