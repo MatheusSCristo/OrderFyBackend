@@ -1,9 +1,7 @@
 package com.orderfy.backend.models;
 
 import com.orderfy.backend.enums.EmployeeRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +27,7 @@ public class EmployeeModel extends AbstractModel implements UserDetails {
     private String name;
     private String cpf;
     private String password;
+    @Enumerated(EnumType.STRING)
     private EmployeeRole role;
 
     @Override

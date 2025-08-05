@@ -80,7 +80,8 @@ CREATE TABLE tabs (
                       waiter_id BIGINT NULL, -- Employee who opened the tab
                       status VARCHAR(50) NOT NULL DEFAULT 'OPEN', -- Ex: OPEN, CLOSED, PAID
                       total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-                      opened_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                       closed_at TIMESTAMP NULL,
                       PRIMARY KEY (id),
                       FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
