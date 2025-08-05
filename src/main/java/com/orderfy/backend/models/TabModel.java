@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity(name="tab")
 @Table(name="tabs")
@@ -25,10 +27,14 @@ public class TabModel extends AbstractModel {
     @ManyToOne(fetch = FetchType.LAZY)
     private CustomerModel customer;
     @ManyToOne(fetch = FetchType.LAZY)
-    private EmployeeModel employee;
+    private EmployeeModel waiter;
     @Enumerated(EnumType.STRING)
-    private TabStatus  tabStatus;
+    private TabStatus  status;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
     @Column(name = "closed_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp closedAt;
+    @OneToMany(mappedBy = "tab")
+    private List<TabItemModel> items;
 }
