@@ -1,12 +1,11 @@
 package com.orderfy.backend.exceptions;
 
 import com.orderfy.backend.exceptions.customer.ExceptionResponse;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -17,14 +16,28 @@ public class GlobalHandlerException {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalHandlerException.class);
 
+    private void handledExceptionLog(Exception ex) {
+        logger.warn("Exceção de API tratada: {}", ex.getMessage());
+    }
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Object> handleApiException(ApiException ex) {
         ExceptionResponse response = new ExceptionResponse(ex.getMessage(), ex.getStatus(), ex.getTimestamp());
-        logger.warn("Exceção de API tratada: {}", ex.getMessage());
+        handledExceptionLog(ex);
         return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getStatus()));
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(BadCredentialsException ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                "Credenciais inválidas",
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+
+        handledExceptionLog(ex);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
     @ExceptionHandler(Exception.class)
