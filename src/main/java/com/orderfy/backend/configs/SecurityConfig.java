@@ -42,6 +42,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/customers/create").permitAll()
+                        .requestMatchers("/restaurants/create").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ping").permitAll()
                         .anyRequest().authenticated()
                 ).authenticationProvider(authenticationProvider)

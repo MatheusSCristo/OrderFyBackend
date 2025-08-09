@@ -22,11 +22,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/customer/register")
-    public ResponseEntity<LoginResponseDTO> customerRegister(@RequestBody @Valid CustomerRegisterRequestDTO customerRegisterRequestDTO) {
-        LoginResponseDTO response=authService.registerCustomer(customerRegisterRequestDTO);
-        return ResponseEntity.ok(response);
-    }
 
 
 }

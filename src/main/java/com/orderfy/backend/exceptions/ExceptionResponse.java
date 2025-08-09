@@ -1,4 +1,4 @@
-package com.orderfy.backend.exceptions.customer;
+package com.orderfy.backend.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
