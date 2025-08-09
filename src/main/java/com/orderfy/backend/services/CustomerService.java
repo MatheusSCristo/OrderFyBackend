@@ -31,7 +31,10 @@ public class CustomerService {
         if (existing.isPresent()) {
             throw new CustomerAlreadyExistsException();
         }
-        CustomerModel newCustomer = new CustomerModel(customer.name(),customer.cpf());
+        CustomerModel newCustomer = CustomerModel.builder()
+                .name(customer.name())
+                .cpf(customer.cpf())
+                .build();
         customerRepository.save(newCustomer);
     }
 

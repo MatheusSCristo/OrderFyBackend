@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiExceptionResponse extends RuntimeException {
+public class ApiException extends RuntimeException {
     private String message;
     private int status;
     private LocalDateTime timestamp=LocalDateTime.now();
 
-    public ApiExceptionResponse(String message, int status) {
+    public ApiException(String message, int status) {
         this.message = message;
         this.status = status;
     }
