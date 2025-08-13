@@ -23,7 +23,7 @@ public class EmployeeController {
             @PathVariable Long restaurantId,
             @RequestBody @Valid EmployeeRegisterRequestDTO employeeRegisterRequestDTO) {
 
-        EmployeeModel createdEmployee = employeeService.createEmployee(restaurantId, employeeRegisterRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
+        employeeService.createEmployee(restaurantId, employeeRegisterRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
