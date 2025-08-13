@@ -3,8 +3,6 @@ package com.orderfy.backend.services;
 import com.orderfy.backend.dto.request.auth.CustomerRegisterRequestDTO;
 import com.orderfy.backend.dto.request.auth.LoginRequestDTO;
 import com.orderfy.backend.dto.response.auth.LoginResponseDTO;
-import com.orderfy.backend.exceptions.customer.CustomerAlreadyExistsException;
-import com.orderfy.backend.models.CustomerModel;
 import com.orderfy.backend.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
