@@ -8,7 +8,7 @@ public record RestaurantRegisterRequestDTO(
         @NotBlank
         String name,
         @NotBlank
-        String cnpjCpf,
+        String cnpj,
         @NotBlank
         String managerName,
 

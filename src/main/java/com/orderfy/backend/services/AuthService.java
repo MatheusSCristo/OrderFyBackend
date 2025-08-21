@@ -4,6 +4,7 @@ import com.orderfy.backend.dto.request.auth.CustomerRegisterRequestDTO;
 import com.orderfy.backend.dto.request.auth.LoginRequestDTO;
 import com.orderfy.backend.dto.response.auth.LoginResponseDTO;
 import com.orderfy.backend.repositories.CustomerRepository;
+import com.orderfy.backend.utils.Formatter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,17 +27,19 @@ public class AuthService {
     public LoginResponseDTO login(LoginRequestDTO request) {
         UserDetails user;
 
+        String formattedCpf=Formatter.formatCpfCnpj(request.cpf());
         if (request.password() == null || request.password().isEmpty()) {
-            user = customerRepository.findByCpf(request.cpf())
+
+            user = customerRepository.findByCpf(formattedCpf)
                     .orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
         } else {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.cpf(),
+                            formattedCpf,
                             request.password()
                     )
             );
-            user = userDetailsService.loadUserByUsername(request.cpf());
+            user = userDetailsService.loadUserByUsername(formattedCpf);
         }
 
         String jwt = jwtService.generateToken(user);

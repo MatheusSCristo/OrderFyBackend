@@ -22,8 +22,7 @@ import java.util.List;
 @SuperBuilder
 public class RestaurantModel extends AbstractModel {
     private String name;
-    @Column(name = "cnpj_cpf")
-    private String cnpjCpf;
+    private String cnpj;
     @OneToMany(mappedBy = "restaurant")
     private List<EmployeeModel> employees;
 

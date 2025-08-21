@@ -9,6 +9,7 @@ import com.orderfy.backend.models.EmployeeModel;
 import com.orderfy.backend.models.RestaurantModel;
 import com.orderfy.backend.repositories.EmployeeRepository;
 import com.orderfy.backend.repositories.RestaurantRepository;
+import com.orderfy.backend.utils.Formatter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,34 +29,34 @@ public class RestaurantService {
 
     @Transactional
     public void createRestaurant(RestaurantRegisterRequestDTO restaurantRegisterRequestDTO) {
-        Optional<RestaurantModel> existingRestaurant = findRestaurantByCpfCnpj(restaurantRegisterRequestDTO.cnpjCpf());
+        String formattedCnpj = Formatter.formatCpfCnpj(restaurantRegisterRequestDTO.cnpj());
+        String formattedCpf = Formatter.formatCpfCnpj(restaurantRegisterRequestDTO.managerCpf());
+        Optional<RestaurantModel> existingRestaurant = findRestaurantByCnpj(formattedCnpj);
         if (existingRestaurant.isPresent()) {
-            throw new EntityAlreadyExistsException("Restaurante","CPF/CNPJ", restaurantRegisterRequestDTO.cnpjCpf());
+            throw new EntityAlreadyExistsException("Restaurante","CPF/CNPJ", restaurantRegisterRequestDTO.cnpj());
         }
 
-        Optional<EmployeeModel> existingEmployee = employeeRepository.findByCpf(restaurantRegisterRequestDTO.managerCpf());
+        Optional<EmployeeModel> existingEmployee = employeeRepository.findByCpf(formattedCpf);
         if (existingEmployee.isPresent()){
-            throw new EntityAlreadyExistsException("Funcionário","CPF", restaurantRegisterRequestDTO.cnpjCpf());
+            throw new EntityAlreadyExistsException("Funcionário","CPF", restaurantRegisterRequestDTO.cnpj());
 
         }
 
-        Optional<CustomerModel> existingCustomer = customerService.findCustomer(restaurantRegisterRequestDTO.managerCpf());
+        Optional<CustomerModel> existingCustomer = customerService.findCustomer(formattedCpf);
         if (existingCustomer.isPresent()){
-            throw new EntityAlreadyExistsException("Cliente","CPF", restaurantRegisterRequestDTO.cnpjCpf());
+            throw new EntityAlreadyExistsException("Cliente","CPF", restaurantRegisterRequestDTO.cnpj());
 
         }
 
 
         RestaurantModel restaurant = RestaurantModel.builder()
                 .name(restaurantRegisterRequestDTO.name())
-                .cnpjCpf(restaurantRegisterRequestDTO.cnpjCpf())
+                .cnpj(formattedCnpj)
                 .build();
         RestaurantModel savedRestaurant = restaurantRepository.save(restaurant);
-
-
         EmployeeModel manager = EmployeeModel.builder()
                 .name(restaurantRegisterRequestDTO.managerName())
-                .cpf(restaurantRegisterRequestDTO.managerCpf())
+                .cpf(formattedCpf)
                 .password(passwordEncoder.encode(restaurantRegisterRequestDTO.managerPassword()))
                 .role(EmployeeRole.MANAGER)
                 .restaurant(savedRestaurant)
@@ -64,8 +65,9 @@ public class RestaurantService {
     }
 
 
-    public Optional<RestaurantModel> findRestaurantByCpfCnpj(String cpfCnpj) {
-        return restaurantRepository.findRestaurantByCnpjCpf(cpfCnpj);
+    public Optional<RestaurantModel> findRestaurantByCnpj(String cnpj) {
+        String formattedCnpj = cnpj.replaceAll("\\D", "");
+        return restaurantRepository.findRestaurantByCnpj(formattedCnpj);
     }
 
 

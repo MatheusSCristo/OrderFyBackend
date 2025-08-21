@@ -8,6 +8,5 @@ import java.util.Optional;
 @Repository
 public interface RestaurantRepository extends AbstractRepository<RestaurantModel> {
 
-
-    Optional<RestaurantModel> findRestaurantByCnpjCpf(String cnpjCpf);
+    Optional<RestaurantModel> findRestaurantByCnpj(String cnpj);
 }

@@ -9,6 +9,5 @@ public record LoginRequestDTO(
         @NotNull
         String cpf,
         String password
-
 ) {
 }

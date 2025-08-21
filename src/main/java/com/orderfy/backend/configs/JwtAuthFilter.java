@@ -1,6 +1,7 @@
 package com.orderfy.backend.configs;
 
 import com.orderfy.backend.services.JwtService;
+import com.orderfy.backend.utils.Formatter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,11 +51,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             final String jwt = authHeader.substring(7);
             final String userName = jwtService.extractUsername(jwt);
+            String formattedUsername= Formatter.formatCpfCnpj(userName);
+
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (userName != null && authentication == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
+            if (authentication == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(formattedUsername);
 
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

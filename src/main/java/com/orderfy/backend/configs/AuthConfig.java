@@ -26,6 +26,7 @@ public class AuthConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
+
         // Lógica para buscar em ambos os repositórios
         return username -> employeeRepository.findByCpf(username)
                 .map(employee -> (UserDetails) employee)

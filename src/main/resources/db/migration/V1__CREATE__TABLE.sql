@@ -6,7 +6,7 @@ USE orderfy;
 CREATE TABLE restaurants (
                              id BIGINT NOT NULL AUTO_INCREMENT,
                              name VARCHAR(255) NOT NULL,
-                             cnpj_cpf VARCHAR(18) NOT NULL UNIQUE,
+                             cnpj VARCHAR(14) NOT NULL UNIQUE,
                              created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                              PRIMARY KEY (id)
@@ -16,7 +16,7 @@ CREATE TABLE employees (
                            id BIGINT NOT NULL AUTO_INCREMENT,
                            restaurant_id BIGINT NOT NULL,
                            name VARCHAR(255) NOT NULL,
-                           cpf VARCHAR(14) NOT NULL UNIQUE,
+                           cpf VARCHAR(11) NOT NULL UNIQUE,
                            password VARCHAR(255) NOT NULL,
                            role VARCHAR(50) NOT NULL,
                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,7 +28,7 @@ CREATE TABLE employees (
 CREATE TABLE customers (
                            id BIGINT NOT NULL AUTO_INCREMENT,
                            name VARCHAR(255) NULL,
-                           cpf VARCHAR(14) NOT NULL UNIQUE,
+                           cpf VARCHAR(11) NOT NULL UNIQUE,
                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                            PRIMARY KEY (id)
