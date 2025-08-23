@@ -42,13 +42,6 @@ public class RestaurantService {
 
         }
 
-        Optional<CustomerModel> existingCustomer = customerService.findCustomer(formattedCpf);
-        if (existingCustomer.isPresent()){
-            throw new EntityAlreadyExistsException("Cliente","CPF", restaurantRegisterRequestDTO.cnpj());
-
-        }
-
-
         RestaurantModel restaurant = RestaurantModel.builder()
                 .name(restaurantRegisterRequestDTO.name())
                 .cnpj(formattedCnpj)

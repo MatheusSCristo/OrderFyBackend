@@ -1,13 +1,12 @@
 package com.orderfy.backend.controller;
 
-import com.orderfy.backend.dto.request.auth.LoginRequestDTO;
+import com.orderfy.backend.dto.request.auth.EmployeeLoginRequestDTO;
 import com.orderfy.backend.dto.request.auth.RestaurantRegisterRequestDTO;
 import com.orderfy.backend.dto.response.auth.LoginResponseDTO;
 import com.orderfy.backend.services.AuthService;
 import com.orderfy.backend.services.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,7 @@ public class RestaurantController {
     @PostMapping("/create")
     public ResponseEntity<LoginResponseDTO> create(@RequestBody RestaurantRegisterRequestDTO restaurantRegisterRequestDTO){
         restaurantService.createRestaurant(restaurantRegisterRequestDTO);
-        LoginResponseDTO response=authService.login(new LoginRequestDTO(restaurantRegisterRequestDTO.managerCpf(),restaurantRegisterRequestDTO.managerPassword()));
+        LoginResponseDTO response=authService.login(new EmployeeLoginRequestDTO(restaurantRegisterRequestDTO.managerCpf(),restaurantRegisterRequestDTO.managerPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

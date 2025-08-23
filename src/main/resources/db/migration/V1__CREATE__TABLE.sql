@@ -28,7 +28,7 @@ CREATE TABLE employees (
 CREATE TABLE customers (
                            id BIGINT NOT NULL AUTO_INCREMENT,
                            name VARCHAR(255) NULL,
-                           cpf VARCHAR(11) NOT NULL UNIQUE,
+                           identifying_id BIGINT ,
                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                            PRIMARY KEY (id)
@@ -83,7 +83,6 @@ CREATE TABLE products_categories (
 
 CREATE TABLE tabs (
                       id BIGINT NOT NULL AUTO_INCREMENT,
-                      restaurant_id BIGINT NOT NULL,
                       table_id BIGINT NOT NULL,
                       customer_id BIGINT NOT NULL,
                       waiter_id BIGINT NULL,

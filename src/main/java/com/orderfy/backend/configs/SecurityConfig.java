@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/customers/create").permitAll()
                         .requestMatchers("/restaurants/create").permitAll()
                         .requestMatchers(HttpMethod.POST, "/restaurants/*/employees").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST,"/customers/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ping").permitAll()
                         .anyRequest().authenticated()
                 ).authenticationProvider(authenticationProvider)

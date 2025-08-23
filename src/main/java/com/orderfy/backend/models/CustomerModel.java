@@ -1,5 +1,6 @@
 package com.orderfy.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,9 @@ import java.util.List;
 @SuperBuilder
 public class CustomerModel extends AbstractModel implements UserDetails {
     private String name;
-    private String cpf;
+
+    @Column(name="identifying_id")
+    private String identifyingId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -37,8 +40,9 @@ public class CustomerModel extends AbstractModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return cpf;
+        return this.identifyingId;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

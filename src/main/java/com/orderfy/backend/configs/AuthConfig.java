@@ -26,13 +26,24 @@ public class AuthConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
+        return username -> {
+            var employeeDetails = employeeRepository.findByCpf(username)
+                    .map(employee -> (UserDetails) employee);
 
-        // Lógica para buscar em ambos os repositórios
-        return username -> employeeRepository.findByCpf(username)
-                .map(employee -> (UserDetails) employee)
-                .orElseGet(() -> customerRepository.findByCpf(username)
+            if (employeeDetails.isPresent()) {
+                return employeeDetails.get();
+            }
+
+            try {
+
+                return customerRepository.findByIdentifyingId(username)
                         .map(customer -> (UserDetails) customer)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found with CPF: " + username)));
+                        .orElseThrow(() -> new UsernameNotFoundException("Utilizador não encontrado com o ID: " + username));
+
+            } catch (NumberFormatException e) {
+                throw new UsernameNotFoundException("Formato de identificador inválido para o utilizador: " + username);
+            }
+        };
     }
     @Bean
     BCryptPasswordEncoder passwordEncoder() {

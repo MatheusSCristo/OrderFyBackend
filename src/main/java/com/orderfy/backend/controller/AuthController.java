@@ -1,7 +1,6 @@
 package com.orderfy.backend.controller;
 
-import com.orderfy.backend.dto.request.auth.CustomerRegisterRequestDTO;
-import com.orderfy.backend.dto.request.auth.LoginRequestDTO;
+import com.orderfy.backend.dto.request.auth.EmployeeLoginRequestDTO;
 import com.orderfy.backend.dto.response.auth.LoginResponseDTO;
 import com.orderfy.backend.services.AuthService;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid EmployeeLoginRequestDTO loginRequestDTO) {
         LoginResponseDTO response=authService.login(loginRequestDTO);
         return ResponseEntity.ok(response);
     }
