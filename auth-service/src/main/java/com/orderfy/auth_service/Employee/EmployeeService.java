@@ -18,7 +18,6 @@ public class EmployeeService {
     private final PasswordEncoder passwordEncoder;
 
     public void create(EmployeeCreateRequestDTO employeeCreateRequestDTO) {
-        System.out.println(employeeCreateRequestDTO.toString());
         Restaurant restaurant= restaurantService.findById(employeeCreateRequestDTO.restaurantId());
         String cpf= FormatCpfCnpj.formatCnpj(employeeCreateRequestDTO.cpf());
         Employee employee=new Employee();

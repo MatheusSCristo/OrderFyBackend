@@ -25,13 +25,15 @@ public class Employee implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false,length = 12,columnDefinition = "CHAR(12)")
     private String cpf;
 
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 50)
     private String name;
+    @Column(length = 100)
     private String lastName;
 
     @JoinColumn(name = "restaurant_id")
