@@ -3,9 +3,8 @@ CREATE TABLE restaurants (
     name VARCHAR(100) NOT NULL,
     cnpj CHAR(14)
 );
-
 CREATE TABLE employees (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     cpf CHAR(11) NOT NULL,
     password VARCHAR(255) NOT NULL,
     name VARCHAR(50),
