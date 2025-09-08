@@ -2,6 +2,7 @@ package com.orderfy.auth_service.Auth;
 
 import com.orderfy.auth_service.Auth.config.JwtService;
 import com.orderfy.auth_service.Auth.dto.AuthRequest;
+import com.orderfy.auth_service.Auth.dto.AuthResponse;
 import com.orderfy.auth_service.Employee.Employee;
 import com.orderfy.auth_service.Employee.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,7 +20,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    public String login(AuthRequest request ) throws CredentialException {
+    public AuthResponse login(AuthRequest request ) throws CredentialException {
         Employee employee = employeeRepository
                 .findByCpfAndRestaurantId(request.getCpf(), request.getRestaurantId())
                 .orElse(null);
@@ -32,7 +33,8 @@ public class AuthService {
             throw new CredentialException("Senha incorreta");
         }
 
-        return jwtService.generateTokenForStaff(employee);
+        String token= jwtService.generateTokenForStaff(employee);
+        return new AuthResponse(token,employee.getName(),employee.getRestaurant().getId(),employee.getCpf());
     }
 
 

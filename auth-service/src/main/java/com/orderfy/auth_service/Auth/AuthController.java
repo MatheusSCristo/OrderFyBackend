@@ -17,8 +17,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try{
-        String token= authService.login(request);
-            return ResponseEntity.ok(new AuthResponse(token));
+        AuthResponse response= authService.login(request);
+            return ResponseEntity.ok(response);
         }
         catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
