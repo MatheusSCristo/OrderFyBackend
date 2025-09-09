@@ -2,8 +2,9 @@ package com.orderfy.auth_service.Auth;
 
 import com.orderfy.auth_service.Auth.dto.AuthRequest;
 import com.orderfy.auth_service.Auth.dto.AuthResponse;
+import com.orderfy.auth_service.Auth.dto.CustomerSessionRequestDTO;
+import com.orderfy.auth_service.Auth.dto.CustomerSessionResponseDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/guest-session")
+    public ResponseEntity<CustomerSessionResponseDTO> createGuestSession(@RequestBody CustomerSessionRequestDTO request) {
+        CustomerSessionResponseDTO response = authService.createGuestSession(request);
+        return ResponseEntity.ok(response);
+    }
 
 
 
