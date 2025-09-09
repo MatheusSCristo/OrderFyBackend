@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.CredentialException;
+import javax.security.auth.login.LoginException;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class AuthService {
         }
 
         if (!passwordEncoder.matches(request.getPassword(), employee.getPassword())) {
-            throw new CredentialException("Senha incorreta");
+            throw new CredentialException("Credenciais incorretas");
         }
 
         String token= jwtService.generateTokenForStaff(employee);
