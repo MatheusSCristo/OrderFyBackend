@@ -19,11 +19,6 @@
     <modules>
         <module>gateway-service</module>
         <module>auth-service</module>
-        <module>table-service</module>
-        <module>orders-service</module>
-        <module>payment-service</module>
-        <module>kitchen-service</module>
-        <module>notification-service</module>
     </modules>
 
     <properties>
